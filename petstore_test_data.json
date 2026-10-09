@@ -1,0 +1,82 @@
+[
+  {
+    "id": 9200001,
+    "categoryId": 1,
+    "category": "Dogs",
+    "name": "Bruno",
+    "status": "available",
+    "tagId": 201,
+    "tag": "friendly",
+    "photoUrl": "https://example.com/photos/bruno.jpg"
+  },
+  {
+    "id": 9200002,
+    "categoryId": 2,
+    "category": "Cats",
+    "name": "Whiskers",
+    "status": "pending",
+    "tagId": 202,
+    "tag": "indoor",
+    "photoUrl": "https://example.com/photos/whiskers.jpg"
+  },
+  {
+    "id": 9200003,
+    "categoryId": 3,
+    "category": "Birds",
+    "name": "Tweety",
+    "status": "sold",
+    "tagId": 203,
+    "tag": "singing",
+    "photoUrl": "https://example.com/photos/tweety.jpg"
+  },
+  {
+    "id": 9200004,
+    "categoryId": 1,
+    "category": "Dogs",
+    "name": "Sheru",
+    "status": "available",
+    "tagId": 204,
+    "tag": "guard",
+    "photoUrl": "https://example.com/photos/sheru.jpg"
+  },
+  {
+    "id": 9200005,
+    "categoryId": 4,
+    "category": "Fish",
+    "name": "Nemo",
+    "status": "available",
+    "tagId": 205,
+    "tag": "aquarium",
+    "photoUrl": "https://example.com/photos/nemo.jpg"
+  },
+  {
+    "id": 9200006,
+    "categoryId": 2,
+    "category": "Cats",
+    "name": "Simba",
+    "status": "sold",
+    "tagId": 206,
+    "tag": "playful",
+    "photoUrl": "https://example.com/photos/simba.jpg"
+  },
+  {
+    "id": 9200007,
+    "categoryId": 5,
+    "category": "Rabbits",
+    "name": "Coco",
+    "status": "pending",
+    "tagId": 207,
+    "tag": "fluffy",
+    "photoUrl": "https://example.com/photos/coco.jpg"
+  },
+  {
+    "id": 9200008,
+    "categoryId": 1,
+    "category": "Dogs",
+    "name": "Tommy",
+    "status": "available",
+    "tagId": 208,
+    "tag": "trained",
+    "photoUrl": "https://example.com/photos/tommy.jpg"
+  }
+]
