@@ -66,18 +66,48 @@ H 7 * * *''')
     }
 
     post {
+        // Sends an email after EVERY run - passed or failed.
+        // Needs the Email Extension plugin and SMTP set up (Manage Jenkins > System > Extended E-mail Notification).
         always {
-            junit allowEmptyResults: true, testResults: "${REPORT_DIR}/*.xml"
-            archiveArtifacts artifacts: "${REPORT_DIR}/**", allowEmptyArchive: true
-        }
-        failure {
-            // Needs the Email Extension plugin and SMTP set up (see the setup guide, step 5).
-            emailext(
-                to: 'keshav.p@droisys.com',
-                subject: "PetStore API tests FAILED - build #${env.BUILD_NUMBER}",
-                body: "The daily PetStore run failed.\nResults: ${env.BUILD_URL}testReport/\nReports: ${env.BUILD_URL}artifact/${REPORT_DIR}/",
-                attachmentsPattern: "${REPORT_DIR}/*.html"
-            )
+            script {
+                def t = junit allowEmptyResults: true, testResults: "${REPORT_DIR}/*.xml"
+                archiveArtifacts artifacts: "${REPORT_DIR}/**", allowEmptyArchive: true
+
+                def total   = t ? t.totalCount : 0
+                def failed  = t ? t.failCount  : 0
+                def skipped = t ? t.skipCount  : 0
+                def passed  = total - failed - skipped
+                def result  = currentBuild.currentResult            // SUCCESS, UNSTABLE or FAILURE
+                def ok      = (result == 'SUCCESS')
+                def label   = ok ? 'PASSED' : 'FAILED'
+                def colour  = ok ? '#1a7f37' : '#cf222e'
+
+                emailext(
+                    to: 'keshavprasad23@gmail.com',
+                    subject: "${label}: PetStore API tests - build #${env.BUILD_NUMBER} (${passed}/${total} passed)",
+                    mimeType: 'text/html',
+                    attachmentsPattern: "${REPORT_DIR}/*.html",
+                    body: """
+                        <div style="font-family:Arial,sans-serif;font-size:14px">
+                          <h2 style="color:${colour};margin:0 0 12px">PetStore API tests ${label}</h2>
+                          <table cellpadding="6" style="border-collapse:collapse;border:1px solid #ddd">
+                            <tr><td><b>Job</b></td><td>${env.JOB_NAME}</td></tr>
+                            <tr><td><b>Build</b></td><td>#${env.BUILD_NUMBER}</td></tr>
+                            <tr><td><b>Result</b></td><td style="color:${colour}"><b>${result}</b></td></tr>
+                            <tr><td><b>Tests passed</b></td><td>${passed} of ${total}</td></tr>
+                            <tr><td><b>Tests failed</b></td><td>${failed}</td></tr>
+                            <tr><td><b>Duration</b></td><td>${currentBuild.durationString.replace(' and counting', '')}</td></tr>
+                          </table>
+                          <p>
+                            <a href="${env.BUILD_URL}testReport/">Test results</a> &middot;
+                            <a href="${env.BUILD_URL}artifact/${REPORT_DIR}/">HTML reports</a> &middot;
+                            <a href="${env.BUILD_URL}console">Console log</a>
+                          </p>
+                          <p style="color:#666">The Newman HTML reports are attached.</p>
+                        </div>
+                    """
+                )
+            }
         }
     }
 }
