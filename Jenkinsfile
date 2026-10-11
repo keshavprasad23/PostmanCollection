@@ -83,7 +83,7 @@ H 7 * * *''')
                 def colour  = ok ? '#1a7f37' : '#cf222e'
 
                 emailext(
-                    to: 'keshavprasad23@gmail.com', , keshav.p@droisys.com',
+                    to: 'keshavprasad23@gmail.com, keshav.p@droisys.com',
                     subject: "${label}: PetStore API tests - build #${env.BUILD_NUMBER} (${passed}/${total} passed)",
                     mimeType: 'text/html',
                     attachmentsPattern: "${REPORT_DIR}/*.html",
